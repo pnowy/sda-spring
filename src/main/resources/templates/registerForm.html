@@ -7,7 +7,7 @@
 <body>
 
 <form method="post" th:action="@{/register}">
-    Imię: <input type="text" name="firstName">
+    Imię: <input type="text" name="firstName" th:value="${registerForm.firstName}">
     <br>
     Nazwisko: <input type="text" name="lastName">
     <br>

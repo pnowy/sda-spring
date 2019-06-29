@@ -2,42 +2,45 @@ package pl.sda.jp.miniblogw16;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.sda.jp.miniblogw16.user.RegisterForm;
-import pl.sda.jp.miniblogw16.user.UserEntity;
-import pl.sda.jp.miniblogw16.user.UserRepository;
+import pl.sda.jp.miniblogw16.user.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/register")
-    public String showRegisterForm() {
-
-
+    public String showRegisterForm(Model model) {
+        model.addAttribute("registerForm", new RegisterForm());
         return "registerForm";
     }
 
     @PostMapping("/register")
     public String handleRegisterForm(
-            @ModelAttribute RegisterForm registerForm
+            @ModelAttribute @Valid RegisterForm registerForm,
+            BindingResult bindingResult,
+            Model model
     ) {
-        UserEntity user = new UserEntity();
-        user.setFirstName(registerForm.getFirstName());
-        user.setLastName(registerForm.getLastName());
-        user.setEmail(registerForm.getEmail());
-        user.setPassword(registerForm.getPassword());
 
-        userRepository.save(user);
+        if (bindingResult.hasErrors()) {
+//            model.addAttribute("registerForm", registerForm);
+            return "registerForm";
+        }
 
-        return "registerForm";
+        userService.registerUser(registerForm);
+        return "redirect:/";
     }
 }
