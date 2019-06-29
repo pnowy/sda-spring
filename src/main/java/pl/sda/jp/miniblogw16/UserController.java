@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.jp.miniblogw16.user.RegisterForm;
 
 @Controller
 public class UserController {
@@ -18,9 +19,9 @@ public class UserController {
 
     @PostMapping("/register")
     public String handleRegisterForm(
-            @ModelAttribute String firstName
+            @ModelAttribute RegisterForm registerForm
     ) {
-        System.out.println(firstName);
+        System.out.println(registerForm);
 
         return "registerForm";
     }
