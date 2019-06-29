@@ -34,7 +34,7 @@ public class UserController {
             BindingResult bindingResult,
             Model model
     ) {
-
+        bindingResult.rejectValue("email", "email-duplicate", "duplikat emaila");
         if (bindingResult.hasErrors()) {
 //            model.addAttribute("registerForm", registerForm);
             return "registerForm";
