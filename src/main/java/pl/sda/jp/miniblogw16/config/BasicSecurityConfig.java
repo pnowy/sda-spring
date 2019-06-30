@@ -22,16 +22,26 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+            .authorizeRequests()
+                .antMatchers("/admin/users")
+                    .hasRole("ADMIN")
+                    //.hasAuthority("ROLE_ADMIN")
+                .antMatchers("/post/*").hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll()
-                .and()
-                .formLogin()
+            .and()
+                .csrf().disable()
+                .headers().frameOptions().disable()
+            .and()
+            .formLogin()
                 .loginPage("/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/loginBySpring")
                 .defaultSuccessUrl("/")
-                .failureUrl("/login?status=error");
+                .failureUrl("/login?status=error")
+//            .and().logout().logoutUrl("/logout")
+        ;
     }
 
     @Override

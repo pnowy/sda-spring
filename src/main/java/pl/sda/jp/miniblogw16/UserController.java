@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.sda.jp.miniblogw16.user.EmailAlreadyExistsException;
 import pl.sda.jp.miniblogw16.user.RegisterForm;
 import pl.sda.jp.miniblogw16.user.UserService;
@@ -34,7 +35,8 @@ public class UserController {
     public String handleRegisterForm(
             @ModelAttribute @Valid RegisterForm registerForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
 //            model.addAttribute("registerForm", registerForm);
@@ -47,6 +49,7 @@ public class UserController {
             bindingResult.rejectValue("email", "email-duplicate", "duplikat emaila");
             return "registerForm";
         }
+        redirectAttributes.addFlashAttribute("msg", "Dzięki za rejestrację!");
         return "redirect:/";
     }
 
