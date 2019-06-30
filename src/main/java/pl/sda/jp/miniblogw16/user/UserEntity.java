@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,4 +26,11 @@ public class UserEntity {
     @ManyToMany
     @JoinTable(name = "user_role")
     private Set<RoleEntity> roles;
+
+    public void addRole(RoleEntity roleEntity){
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(roleEntity);
+    }
 }
