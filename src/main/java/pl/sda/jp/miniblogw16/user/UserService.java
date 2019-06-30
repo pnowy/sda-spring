@@ -12,7 +12,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void registerUser(RegisterForm registerForm) {
+    public void registerUser(RegisterForm registerForm) throws EmailAlreadyExistsException {
+        if (userRepository.existsByEmail(registerForm.getEmail())) {
+            throw new EmailAlreadyExistsException("Duplicate email");
+        }
+
         UserEntity user = new UserEntity();
         user.setFirstName(registerForm.getFirstName());
         user.setLastName(registerForm.getLastName());

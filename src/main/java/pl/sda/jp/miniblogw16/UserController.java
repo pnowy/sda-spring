@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.sda.jp.miniblogw16.user.EmailAlreadyExistsException;
 import pl.sda.jp.miniblogw16.user.RegisterForm;
 import pl.sda.jp.miniblogw16.user.UserService;
 
@@ -34,13 +35,17 @@ public class UserController {
             BindingResult bindingResult,
             Model model
     ) {
-        bindingResult.rejectValue("email", "email-duplicate", "duplikat emaila");
         if (bindingResult.hasErrors()) {
 //            model.addAttribute("registerForm", registerForm);
             return "registerForm";
         }
 
-        userService.registerUser(registerForm);
+        try {
+            userService.registerUser(registerForm);
+        } catch (EmailAlreadyExistsException e) {
+            bindingResult.rejectValue("email", "email-duplicate", "duplikat emaila");
+            return "registerForm";
+        }
         return "redirect:/";
     }
 }
