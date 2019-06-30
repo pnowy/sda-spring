@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zaloguj się do bloga!</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/loginBySpring}">
+    E-mail: <input type="text" name="email" >
+    <br>
+    Hasło: <input type="password" name="password">
+    <br>
+    <input type="submit" value="Zaloguj">
+</form>
+
+</body>
+</html>
