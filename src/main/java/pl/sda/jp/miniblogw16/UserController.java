@@ -29,6 +29,7 @@ public class UserController {
         return "registerForm";
     }
 
+    // TODO: For each new user add "ROLE_USER" automatically
     @PostMapping("/register")
     public String handleRegisterForm(
             @ModelAttribute @Valid RegisterForm registerForm,
