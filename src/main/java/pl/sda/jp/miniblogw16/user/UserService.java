@@ -1,22 +1,21 @@
 package pl.sda.jp.miniblogw16.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserService {
     public static final String ROLE_USER = "ROLE_USER";
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void registerUser(RegisterForm registerForm) throws EmailAlreadyExistsException {
@@ -40,7 +39,8 @@ public class UserService {
         user.setFirstName(registerForm.getFirstName());
         user.setLastName(registerForm.getLastName());
         user.setEmail(registerForm.getEmail());
-        user.setPassword(registerForm.getPassword());
+        //user.setPassword(registerForm.getPassword());
+        user.setPassword(passwordEncoder.encode(registerForm.getPassword()));
 
 //        Set<RoleEntity> rolesSet = new HashSet<>();
 //        rolesSet.add(defaultRole);
