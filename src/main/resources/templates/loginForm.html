@@ -7,11 +7,13 @@
 <body>
 
 <form method="post" th:action="@{/loginBySpring}">
+    <p class="alert alert-danger" th:if="${param.error}" th:text="'Podany login lub hasło są nieprawidłowe'"></p>
+
     E-mail: <input type="text" name="email" >
     <br>
     Hasło: <input type="password" name="password">
     <br>
-    <input type="submit" value="Zaloguj">
+    <input type="submit" value="Zaloguj się">
 </form>
 
 </body>

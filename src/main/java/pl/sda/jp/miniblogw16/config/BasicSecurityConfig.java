@@ -24,11 +24,20 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/admin/users")
-                    .hasRole("ADMIN")
-                    //.hasAuthority("ROLE_ADMIN")
-                .antMatchers("/post/*").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/assets/**").permitAll()
+//                .antMatchers("/").permitAll()
+                .antMatchers("/").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/admin/users").hasRole("ADMIN")
+//                .antMatchers("/").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+//                .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/post/**").hasAnyAuthority("ROLE_USER")
+//                .antMatchers("/h2/**").permitAll()
                 .anyRequest().permitAll()
+                    //.hasAuthority("ROLE_ADMIN")
+//                .antMatchers("/post/*").hasAnyRole("USER", "ADMIN")
+//                .anyRequest().permitAll()
             .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
@@ -38,14 +47,18 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/loginBySpring")
-                .defaultSuccessUrl("/")
-                .failureUrl("/login?status=error")
-//            .and().logout().logoutUrl("/logout")
-        ;
+                .failureUrl("/login?error")
+                .defaultSuccessUrl("/").and()
+                .logout()
+                    .logoutSuccessUrl("/login");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin"))
+                .roles("ADMIN");
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT u.email, u.password, 1 " +

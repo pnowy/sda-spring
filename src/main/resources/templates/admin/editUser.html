@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Super blog!</title>
+</head>
+<body>
+<h1>Edit user</h1>
+
+<!--<form method="post" th:action="@{'/admin/users/'+${user.id}}" th:object="${user}">-->
+<form method="post" th:action="@{/admin/user}" th:object="${user}">
+    <input type="hidden" th:field="*{id}" />
+    Imię: <input type="text" th:field="*{firstName}" th:errorClass="error">
+    <span th:errors="*{firstName}"></span>
+    <br>
+    Nazwisko: <input type="text" th:field="*{lastName}" th:errorClass="error">
+    <span th:errors="*{lastName}"></span>
+    <br>
+    E-mail: <input type="text" th:field="*{email}" th:errorClass="error">
+    <span th:errors="*{email}"></span>
+    <br>
+    Role:
+    <select th:field="*{roles}" multiple="multiple">
+        <option th:value="'ROLE_USER'" th:text="User"></option>
+        <option th:value="'ROLE_ADMIN'" th:text="Admin"></option>
+    </select>
+    <br>
+    <input type="submit" value="Zapisz">
+</form>
+
+</body>
+</html>

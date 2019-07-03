@@ -3,9 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Super blog!</title>
+    <script th:replace="fragments/header :: header-libs"></script>
 </head>
 <body>
-<h1>Super blog!</h1>
+<h1 class="error">Super blog!</h1>
 <p th:if="${msg != null}" th:text="${msg}"></p>
+
+<!--<p>-->
+<!--    <a th:href="@{/register}">Register</a>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--    <a th:href="@{/admin/users}">Users</a>-->
+<!--</p>-->
+
+
+<span th:if="${@userContextService.getLoggedUserEmail()}">
+            <span th:if="${@userContextService.isAdmin()}">
+                Zalogowany jako admin
+<!--                <a th:href="@{/admin/users}">Użytkwownicy</a>-->
+            </span>
+            <span th:if="${@userContextService.isUser()}">
+<!--                <a th:if="${@userContextService.getLoggedUserEmail()}" href="/test">Posty</a>-->
+                Zalogowany jako użytkownik
+            </span>
+            <a href="/logout" style="float: right">Wyloguj</a>
+</span>
+
+<span th:if="!${@userContextService.getLoggedUserEmail()}">
+            <a href="/register">Rejestracja</a>
+            <a href="/login">Login</a>
+</span>
+
+<p th:if="${@userContextService.getLoggedUserEmail()}"
+   th:text="'Zalogowano jako: '+ ${@userContextService.getLoggedUserEmail()}"></p>
+
+
+<!--<div th:replace="fragments/footer :: footer"></div>-->
+
 </body>
+<script>
+    $.get("/rest", function( data ) {
+        console.log(data);
+        // $( ".result" ).html( data );
+        // alert( "Load was performed." );
+    });
+</script>
 </html>
