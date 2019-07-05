@@ -8,11 +8,11 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>pl.sda.jp</groupId>
-    <artifactId>miniblog-w16</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>miniblog-w16</name>
-    <description>Demo project for Spring Boot</description>
+    <groupId>com.github.pnowy.sda</groupId>
+    <artifactId>sda</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>sda-spring-project</name>
+    <description>Demo project for SDA Spring lessons</description>
 
     <properties>
         <java.version>1.8</java.version>
