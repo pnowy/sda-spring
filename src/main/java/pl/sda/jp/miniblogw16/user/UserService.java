@@ -58,6 +58,11 @@ public class UserService {
 
     }
 
+    public UserEntity updateUser(EditUserForm editUserForm) {
+        // put logic for update here
+        return null;
+    }
+
     @PostConstruct
     void init() {
 //        System.out.println("User service after init!");
