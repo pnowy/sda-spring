@@ -1,16 +1,19 @@
 package pl.sda.jp.miniblogw16.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.sda.jp.miniblogw16.user.UserService;
 
 import javax.sql.DataSource;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static pl.sda.jp.miniblogw16.config.Roles.ADMIN;
+import static pl.sda.jp.miniblogw16.config.Roles.USER;
 
 @Configuration
 public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,11 +28,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+                .antMatchers("/").hasAnyRole(ADMIN.getRoleName(), USER.getRoleName())
                 .antMatchers("/admin/users")
                     .hasRole("ADMIN")
                     //.hasAuthority("ROLE_ADMIN")
                 .antMatchers("/post/**").hasAnyRole("USER", "ADMIN")
-
                 .anyRequest().permitAll()
             .and()
                 .csrf().disable()
@@ -42,7 +45,10 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/loginBySpring")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?status=error")
-//            .and().logout().logoutUrl("/logout")
+            .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
         ;
     }
 
@@ -51,7 +57,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("admin@localhost.com")
                 .password(passwordEncoder.encode("admin"))
-                .roles(Roles.ADMIN.getRoleName());
+                .roles(ADMIN.getRoleName());
 
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
