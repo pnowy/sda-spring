@@ -13,7 +13,7 @@
 </head>
 <body>
     <div th:fragment="header" >
-        To jest header
+        Witam <span th:text="${@permissionService.getCurrentUserName()}"></span>
         <a th:href="@{/logout}" >Wyloguj</a>
     </div>
 </body>

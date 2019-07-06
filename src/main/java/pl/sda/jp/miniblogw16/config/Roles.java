@@ -1,16 +1,22 @@
 package pl.sda.jp.miniblogw16.config;
 
 public enum  Roles {
-    ADMIN("ADMIN"),
-    USER("USER");
+    ADMIN("ADMIN", "ROLE_ADMIN"),
+    USER("USER", "ROLE_USER");
 
     private String roleName;
+    private String authorityName;
 
-    Roles(String roleName) {
+    Roles(String roleName, String authorityName) {
         this.roleName = roleName;
+        this.authorityName = authorityName;
     }
 
     public String getRoleName() {
         return roleName;
+    }
+
+    public String getAuthorityName() {
+        return authorityName;
     }
 }
