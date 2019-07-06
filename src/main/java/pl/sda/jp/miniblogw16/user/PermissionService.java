@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import pl.sda.jp.miniblogw16.config.Roles;
 
+import java.util.Arrays;
+
 import static pl.sda.jp.miniblogw16.config.Roles.ADMIN;
 import static pl.sda.jp.miniblogw16.config.Roles.USER;
 
@@ -31,6 +33,12 @@ public class PermissionService {
                 .getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority().equalsIgnoreCase(role.getAuthorityName()));
+    }
+
+    public boolean isUserInAnyRole(String ... role) {
+        return Arrays.stream(role)
+                .map(roleAsString -> Roles.valueOf(roleAsString.toUpperCase()))
+                .anyMatch(this::isUserInRole);
     }
 
     public String getCurrentUserName() {

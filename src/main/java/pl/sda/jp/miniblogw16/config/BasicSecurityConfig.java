@@ -29,10 +29,9 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/").hasAnyRole(ADMIN.getRoleName(), USER.getRoleName())
-                .antMatchers("/admin/users")
-                    .hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole(ADMIN.getRoleName())
                     //.hasAuthority("ROLE_ADMIN")
-                .antMatchers("/post/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/post/**").hasAnyRole(ADMIN.getRoleName(), USER.getRoleName())
                 .anyRequest().permitAll()
             .and()
                 .csrf().disable()

@@ -10,7 +10,20 @@
 
 <h1>Super blog!</h1>
 
-<p th:if="${msg != null}" th:text="${msg}"></p>
+<!--<p th:if="${msg != null}" th:text="${msg}"></p>-->
+
+<p th:if="${@permissionService.isUserInAnyRole('ADMIN', 'USER')}">
+    Witaj zalogowany użytkowniku
+</p>
+
+<ol>
+    <li th:if="${@permissionService.isUser()}">
+        <a>Link dostępny dla usera</a>
+    </li>
+    <li th:if="${@permissionService.isAdmin()}">
+        <a th:href="@{/admin/users}">Edycja użytkowników</a>
+    </li>
+</ol>
 
 <div th:replace="fragments/footer :: footer"></div>
 </body>
