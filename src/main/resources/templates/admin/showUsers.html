@@ -5,7 +5,9 @@
     <title>Super blog!</title>
 </head>
 <body>
-<h1>Admin space! Users</h1>
-TODO: wyświetlić listę wszystkich użytkowników tutaj
+<h1>Użytkownicy w systemie</h1>
+<p th:each="user : ${users}">
+    <span th:text="${user.id}" /> | <span th:text="${user.firstName}" /> | <span th:text="${user.lastName}" />
+</p>
 </body>
 </html>

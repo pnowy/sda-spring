@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 @Entity
 @Getter
@@ -32,5 +33,13 @@ public class UserEntity {
             roles = new HashSet<>();
         }
         roles.add(roleEntity);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", UserEntity.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("email='" + email + "'")
+                .toString();
     }
 }
