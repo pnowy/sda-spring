@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Super blog!</title>
+    <div th:replace="fragments/header :: header-libs"></div>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <h1>Super blog!</h1>
 <p th:if="${msg != null}" th:text="${msg}"></p>
+
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

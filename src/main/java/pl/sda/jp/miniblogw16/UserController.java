@@ -12,6 +12,8 @@ import pl.sda.jp.miniblogw16.user.EmailAlreadyExistsException;
 import pl.sda.jp.miniblogw16.user.RegisterForm;
 import pl.sda.jp.miniblogw16.user.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -36,7 +38,9 @@ public class UserController {
             @ModelAttribute @Valid RegisterForm registerForm,
             BindingResult bindingResult,
             Model model,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            HttpServletResponse response
     ) {
         if (bindingResult.hasErrors()) {
 //            model.addAttribute("registerForm", registerForm);

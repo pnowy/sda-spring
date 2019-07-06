@@ -3,6 +3,7 @@ package pl.sda.jp.miniblogw16.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,7 +28,8 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/users")
                     .hasRole("ADMIN")
                     //.hasAuthority("ROLE_ADMIN")
-                .antMatchers("/post/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/post/**").hasAnyRole("USER", "ADMIN")
+
                 .anyRequest().permitAll()
             .and()
                 .csrf().disable()
@@ -46,6 +48,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin@localhost.com")
+                .password(passwordEncoder.encode("admin"))
+                .roles(Roles.ADMIN.getRoleName());
+
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT u.email, u.password, 1 " +

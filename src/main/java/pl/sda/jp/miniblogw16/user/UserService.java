@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class UserService {
     public static final String ROLE_USER = "ROLE_USER";
@@ -50,5 +52,10 @@ public class UserService {
 
         userRepository.save(user);
 
+    }
+
+    @PostConstruct
+    void init() {
+//        System.out.println("User service after init!");
     }
 }
