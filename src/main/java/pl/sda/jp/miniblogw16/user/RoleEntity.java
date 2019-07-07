@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.StringJoiner;
 
 @Entity
 @Getter
@@ -20,5 +21,10 @@ public class RoleEntity {
 
     public RoleEntity(String roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return roleName;
     }
 }

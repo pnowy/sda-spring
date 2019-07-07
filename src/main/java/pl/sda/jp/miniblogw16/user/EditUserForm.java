@@ -6,7 +6,10 @@ import lombok.ToString;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -21,6 +24,8 @@ public class EditUserForm {
     @NotNull
     @Email(message = "Nieprawidłowy email")
     private String email;
+    @NotEmpty
+    private Collection<String> roles;
 
     public static EditUserForm create(UserEntity user) {
         EditUserForm form = new EditUserForm();
@@ -28,6 +33,11 @@ public class EditUserForm {
         form.setEmail(user.getEmail());
         form.setFirstName(user.getFirstName());
         form.setLastName(user.getLastName());
+        form.setRoles(user.getRoles().stream()
+                .map(RoleEntity::getRoleName)
+                .collect(Collectors.toSet()));
         return form;
     }
+
+
 }

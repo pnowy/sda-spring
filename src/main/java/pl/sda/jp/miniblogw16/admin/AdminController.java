@@ -30,6 +30,7 @@ public class AdminController {
     @GetMapping("/users")
     public String showUsers(Model model) {
         List<UserEntity> users = userRepository.findAll();
+        log.info("Found {} users", users.size());
         model.addAttribute("users", users);
         return "admin/showUsers";
     }

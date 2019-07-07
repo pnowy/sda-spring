@@ -7,7 +7,7 @@
 <body>
 <h1>Użytkownicy w systemie</h1>
 <p th:each="user : ${users}">
-    <span th:text="${user.id}" /> | <span th:text="${user.firstName}" /> | <span th:text="${user.lastName}" /> <a th:href="@{/admin/user(id=${user.id})}" >Edytuj</a>
+    <span th:text="${user.id}" /> | <span th:text="${user.firstName}" /> | <span th:text="${user.lastName}" /> | <span th:text="${user.roles}" /> <a th:href="@{/admin/user(id=${user.id})}" >Edytuj</a>
 </p>
 </body>
 </html>
