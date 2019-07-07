@@ -37,6 +37,26 @@ Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]<
     </li>
 </ol>
 
+<span id="weather"></span>
+
 <div th:replace="fragments/footer :: footer"></div>
 </body>
+
+<script>
+
+    function refreshWeather() {
+        $.get('http://api.openweathermap.org/data/2.5/weather?q=Warsaw&appid=ea900b66f547fd7b23625544873a4200', function (data) {
+            console.log(data)
+            const weatherDescription = data.weather[0].description
+            $('#weather').text(`${new Date()} | ${weatherDescription}`)
+        })
+    }
+
+    $(document).ready(function () {
+        refreshWeather();
+
+        setInterval(refreshWeather, 5000)
+    });
+</script>
+
 </html>
