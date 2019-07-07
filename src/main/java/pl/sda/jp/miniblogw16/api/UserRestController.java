@@ -2,6 +2,8 @@ package pl.sda.jp.miniblogw16.api;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +34,14 @@ public class UserRestController {
     }
 
     @GetMapping("/user")// /admin/user?id=2
-    public EditUserForm getUserById(@RequestParam Long id) {
+    public ResponseEntity<EditUserForm> getUserById(@RequestParam Long id) {
         Optional<UserEntity> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("User not found with id:"+id);
         }
         log.info("Get user with id={}", id);
-        return EditUserForm.create(optionalUser.get());
+        EditUserForm form = EditUserForm.create(optionalUser.get());
+        return ResponseEntity.ok(form);
     }
 
     @GetMapping("/users/{id}")// /api/users/2
