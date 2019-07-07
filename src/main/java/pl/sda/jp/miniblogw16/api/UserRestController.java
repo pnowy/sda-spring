@@ -1,6 +1,7 @@
 package pl.sda.jp.miniblogw16.api;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController // add automatically @ResponseBody and @RequestBody
 @RequestMapping("/api")
 @AllArgsConstructor
+@Slf4j
 public class UserRestController {
 
     private  final UserRepository userRepository;
@@ -35,6 +37,7 @@ public class UserRestController {
         if (!optionalUser.isPresent()) {
             throw new EntityNotFoundException();
         }
+        log.info("Get user with id={}", id);
         return EditUserForm.create(optionalUser.get());
     }
 

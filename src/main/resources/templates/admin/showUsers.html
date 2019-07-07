@@ -3,11 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Super blog!</title>
+    <style>
+        .error-style {
+            color: red;
+        }
+    </style>
+    <div th:replace="fragments/header :: header-libs"></div>
 </head>
 <body>
 <h1>Użytkownicy w systemie</h1>
 <p th:each="user : ${users}">
     <span th:text="${user.id}" /> | <span th:text="${user.firstName}" /> | <span th:text="${user.lastName}" /> | <span th:text="${user.roles}" /> <a th:href="@{/admin/user(id=${user.id})}" >Edytuj</a>
 </p>
+
+<p id="paragraph1" class="error-style">
+    Should have red color!
+</p>
+
+User id: <input id="userId" type="number" value="1" >
+<button id="getUserButton" >Show user</button>
+<div id="user">
+    tutaj będą dane usera
+</div>
+
 </body>
+
+<script>
+
+    function getUser(id) {
+        $('#user').text('')
+        $.get(`http://localhost:8080/api/user?id=${id}`, function (data) {
+            console.log(data)
+            $('#user').text(`${data.id} Imie: ${data.firstName} ${data.lastName} | Pierwsza rola: ${data.roles}`)
+        })
+    }
+
+    /// to jest wywoływane po załadowaniu całego dokumentu html
+    $(document).ready(function () {
+
+        // działanie zdefiniowane po kliknięciu na przycisk
+        $('#getUserButton').click(function () {
+            console.log('button clicked')
+            let userId = $('#userId').val();
+            // = =
+            // = = =
+            // let x = ''
+            // let y = {}
+            // if (x === y)  // beter to use (compare types to)
+            console.log(userId)
+            if (userId) {
+                // user id is not null
+                getUser(userId);
+            } else {
+                // user id is null
+                $('#user')
+                    .text('Podaj ID usera')
+            }
+        });
+
+        // console.log("page ready!")
+        // let $paragraph1 = $('#paragraph1');
+        // console.log($paragraph1)
+        // $paragraph1.text('this is new text');
+    });
+</script>
+
 </html>
