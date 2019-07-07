@@ -24,8 +24,7 @@ public class UserEntity {
 
     private String password;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role")
     private Set<RoleEntity> roles;
 
