@@ -4,14 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.sda.jp.miniblogw16.user.EditUserForm;
 import pl.sda.jp.miniblogw16.user.UserEntity;
 import pl.sda.jp.miniblogw16.user.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +49,19 @@ public class AdminController {
         EditUserForm editUserForm = EditUserForm.create(optionalUser.get());
         model.addAttribute("editUserForm", editUserForm);
         return "admin/editUser";
+    }
+
+    @PostMapping("/user")
+    public String editUserSave(@ModelAttribute("editUserForm") @Valid EditUserForm user,
+                               BindingResult bindingResult,
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+//            model.addAttribute("id", user.getId());
+            model.addAttribute("user", user);
+            return "/admin/editUser";
+        }
+        System.out.println(user);
+        return "redirect:/admin/user?id="+user.getId();
     }
 }
