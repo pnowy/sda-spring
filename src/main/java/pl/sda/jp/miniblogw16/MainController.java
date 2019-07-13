@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class MainController {
 
 //    @Autowired
-//    @Qualifier("myBeanCustomName")
+//    @Qualifier("myBeanCustomName") // adnotacja która definiuje który bean (w przpadku gdy w kontekście jest kilka) wstrzyknąć
 //    private ObjectMapper objectMapper;
 
 //    @Autowired

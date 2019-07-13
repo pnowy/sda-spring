@@ -12,8 +12,8 @@ public class AuthServiceConfiguration {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Primary
-    @Bean(name = "dbAuthService")
+    @Primary // oznaczenie beana jako głównego/podstawowego (w przypadku kilku beanów będzie domyślnie wstrzykiwany ten)
+    @Bean(name = "dbAuthService") // każdy bean można oznaczać za pomocą nazwy
     public AuthService dbAuthService() {
         return new DbAuthService(passwordEncoder);
     }
