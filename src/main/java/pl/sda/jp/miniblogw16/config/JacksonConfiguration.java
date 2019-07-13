@@ -13,17 +13,19 @@ public class JacksonConfiguration {
 
 //    @Bean
 //    @Primary
+//    @Bean(name = "myBeanCustomName")
 //    public ObjectMapper objectMapper() {
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 //        return objectMapper;
 //    }
 
-//    @Bean
 //    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
 //        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 //        builder.indentOutput(true);
 //        return builder;
 //    }
+
+
 
 }
