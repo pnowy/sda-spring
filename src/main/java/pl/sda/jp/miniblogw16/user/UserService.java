@@ -25,7 +25,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {EmailAlreadyExistsException.class})
     public void registerUser(RegisterForm registerForm) throws EmailAlreadyExistsException {
 
         if (userRepository.existsByEmail(registerForm.getEmail())) {
