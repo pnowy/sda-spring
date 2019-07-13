@@ -7,12 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 import pl.sda.jp.miniblogw16.user.RoleEntity;
 
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -37,13 +33,5 @@ public class JdbcTemplateTest {
                 return roleEntity;
             }
         });
-    }
-
-    @Autowired
-    private EntityManager entityManager;
-
-    @Test
-    public void shouldHaveEntityManager() {
-        assert entityManager != null;
     }
 }
